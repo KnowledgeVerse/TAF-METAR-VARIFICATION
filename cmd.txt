@@ -1,0 +1,9 @@
+git status
+
+git add .
+
+git commit -m "Added new features and updated readme"
+
+git push origin main
+
+

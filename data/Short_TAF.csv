@@ -1,0 +1,4 @@
+Station,group,st_date,end_date,wind_dir,wind_spd,wind_gust,vis,weather,clouds
+VEPT,INITIAL,24-12-2025 00:00,24-12-2025 03:00,0.0,0.0,,500,"FG, BR",
+VEPT,BECMG 2403/2405,24-12-2025 03:00,24-12-2025 05:00,270.0,5.0,,700,"FG, BR",
+VEPT,BECMG 2406/2408,24-12-2025 06:00,24-12-2025 08:00,270.0,5.0,,1200,"BR, HZ",

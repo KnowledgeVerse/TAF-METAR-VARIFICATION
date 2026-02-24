@@ -195,6 +195,7 @@ function clearTAF() {
   document.getElementById("tafInput").value = "";
   document.getElementById("tafOutput").classList.remove("active");
   document.getElementById("tafAlert").className = "alert";
+  document.getElementById("tafActions").style.display = "none";
   decodedTAFs = [];
 }
 
@@ -202,6 +203,7 @@ function clearMETAR() {
   document.getElementById("metarInput").value = "";
   document.getElementById("metarOutput").classList.remove("active");
   document.getElementById("metarAlert").className = "alert";
+  document.getElementById("metarActions").style.display = "none";
   decodedMETARs = [];
 }
 
@@ -717,7 +719,8 @@ function decodeTAF() {
     return;
   }
   alertDiv.className = "alert";
-  outputDiv.classList.add("active");
+  // outputDiv.classList.add("active");
+  document.getElementById("tafActions").style.display = "flex";
   contentDiv.innerHTML = html;
   showAlert(
     alertDiv,
@@ -803,7 +806,8 @@ function decodeMETAR() {
     return;
   }
   alertDiv.className = "alert";
-  outputDiv.classList.add("active");
+  // outputDiv.classList.add("active"); // Removed auto-show
+  document.getElementById("metarActions").style.display = "flex"; // Show actions
   contentDiv.innerHTML = html;
   showAlert(
     alertDiv,
@@ -2026,3 +2030,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize empty dashboard on load
   initEmptyDashboard();
 });
+
+// ========== UI ACTIONS ==========
+function toggleOutput(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle("active");
+}
+
+function scrollToVerification() {
+  const el = document.getElementById("verificationSection");
+  el.scrollIntoView({ behavior: "smooth" });
+}

@@ -1,0 +1,81 @@
+Core Architecture
+
+1. Modular Design
+Utils: Time calculations, category determination, weather decoding
+Parser: TAF and METAR parsing with validation
+VerificationEngine: Core verification logic with all required functions
+UI: Dashboard rendering and chart management
+State: Global state management
+
+
+2. Valid TAF Selection (selectValidTAF)
+Filters TAFs by station and validity period
+Handles month-boundary crossings
+Selects latest issued TAF (supersedes earlier ones)
+Returns OUT_OF_VALIDITY if no valid TAF found
+
+
+3. Active Time Group Detection (detectActiveTimeGroup)
+Priority: FM > TEMPO > BECMG > PROB
+Handles overlapping windows correctly
+Returns group type, transition status, and TEMPO weights
+
+
+4. BECMG Logic (detectActiveTimeGroup)
+Detects transition windows
+Allows both old/new conditions during transition (+15% score boost)
+Applies only new conditions after transition
+
+
+5. TEMPO Logic (compareWeather)
+Applies 60% weight for normal TEMPO
+Applies 80% weight for severe weather TEMPO (TS, SHRA, +)
+Partial credit system
+
+
+6. ICAO Tolerance Rules
+Wind: ±30° direction, ±5kt speed, ±7kt gust
+Visibility: ≥5000m → ±2000m, <5000m → ±1000m
+Cloud: Low ceiling ±200ft, normal ±500ft
+
+
+7. Flight Category Logic
+Converts to VFR/MVFR/IFR/LIFR
+OPERATIONALLY_CORRECT status when category matches but exact values don't
+
+
+8. Lead Time Analysis
+Calculates hours between TAF issue and METAR
+Buckets: 0-6, 6-12, 12-18, 18-24, 24-30 hours
+Tracks accuracy by lead time
+
+
+9. Weighted Scoring
+Wind: 20, Visibility: 25, Cloud: 25, Weather: 20, Category: 10
+Ratings: Excellent (90-100), Good (75-89), Moderate (50-74), Poor (<50)
+
+
+10. Anomaly Detection
+Format validation
+Station/date mismatch
+Wind direction/speed inconsistencies
+TS without CB
+Low visibility without weather
+
+
+11. Trend Analysis
+Improvement/degradation detection
+Consistency scoring
+Consecutive failure tracking
+Professional UI Features
+
+
+
+Executive Summary: KPI cards with color-coded scores
+Interactive Charts: Wind timeline, visibility categories, ceiling distribution, lead time analysis, skill radar, parameter trends
+Detailed Table: Sortable, filterable verification log
+Anomaly Panel: Visual anomaly reporting
+Export: JSON and CSV export functionality
+Responsive Design: Works on all screen sizes
+Glassmorphism: Modern aviation-grade aesthetic
+The system is fully self-contained in a single HTML file with no external dependencies except Chart.js and Font Awesome. It's ready to use immediately and scales efficiently for large datasets.
